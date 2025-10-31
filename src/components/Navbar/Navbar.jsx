@@ -1,17 +1,19 @@
-import React from "react";
+import React, { use } from "react";
 import { NavLink } from "react-router";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Navbar = () => {
+  const { user, loading,logOut } = use(AuthContext);
   const navLinks = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to='/allProducts'>All Products</NavLink>
+        <NavLink to="/allProducts">All Products</NavLink>
       </li>
       <li>
-        <NavLink to='/aboutUs' >About us</NavLink>
+        <NavLink to="/aboutUs">About us</NavLink>
       </li>
     </>
   );
@@ -40,19 +42,24 @@ const Navbar = () => {
             tabIndex="-1"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-           {navLinks}
+            {navLinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Smart <span>Deals</span></a>
+        <a className="btn btn-ghost text-xl">
+          Smart <span>Deals</span>
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-                  { navLinks}
-        </ul>
+        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <NavLink  className="btn">Log Out</NavLink>
-        <NavLink to='login' className="btn">Login</NavLink>
+        {loading?'loading...': user ? (
+          <> <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="profile" /> <button onClick={()=>logOut()} className="btn">Log Out</button></>
+        ) : (
+          <NavLink to="login" className="btn">
+            Login
+          </NavLink>
+        )}
       </div>
     </div>
   );
