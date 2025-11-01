@@ -3,7 +3,9 @@ import { NavLink } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Navbar = () => {
-  const { user, loading,logOut } = use(AuthContext);
+  const { user, loading, logOut } = use(AuthContext);
+  console.log(user);
+  
   const navLinks = (
     <>
       <li>
@@ -54,7 +56,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {loading?'loading...': user ? (
-          <> <img className="h-8 w-8 rounded-full" src={user.photoURL} alt="profile" /> <button onClick={()=>logOut()} className="btn">Log Out</button></>
+          <> <img className="h-10 w-10 mr-3 rounded-full" src={user.photoURL} alt="profile" /> <button onClick={()=>logOut()} className="btn">Log Out</button></>
         ) : (
           <NavLink to="login" className="btn">
             Login

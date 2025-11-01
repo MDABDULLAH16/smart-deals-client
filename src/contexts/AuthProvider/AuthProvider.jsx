@@ -58,18 +58,9 @@ const AuthProvider = ({ children }) => {
   };
 
   // Google Sign-In
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = () => {
     setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      setUser(result.user);
-      return result.user;
-    } catch (err) {
-      console.log(err.message);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
+    return signInWithPopup(auth, googleProvider);
   };
 
   // Listen to auth state changes
@@ -83,7 +74,9 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    setUser,
     loading,
+    setLoading,
     createUser,
     loginUser,
     logOut,
