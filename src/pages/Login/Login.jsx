@@ -1,15 +1,31 @@
  
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import GoogleButton from "../../components/Buttons/GoogleButton/GoogleButton";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const { loginUser, setLoading, setUser } = useContext(AuthContext)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const from = location?.state?.from?.pathname || '/'
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log("Email:", email, "Password:", password);
     // TODO: Add Firebase or backend login logic
+    loginUser(email,password).then(result => {
+      const user = result.user;
+      if (user) {
+        setUser(user);
+        toast.success('Login Successful!');
+        setLoading(false);
+        navigate(from,{replace:true})
+      }
+}).catch(err=>toast.error(err.message))
 
   };
 

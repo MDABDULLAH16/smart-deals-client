@@ -1,11 +1,10 @@
 import React, { use } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 
 const Navbar = () => {
   const { user, loading, logOut } = use(AuthContext);
-  console.log(user);
-  
+ 
   const navLinks = (
     <>
       <li>
@@ -14,6 +13,17 @@ const Navbar = () => {
       <li>
         <NavLink to="/allProducts">All Products</NavLink>
       </li>
+      {user && (
+        <>
+         
+          <li>
+            <NavLink to="/myProducts">My Products</NavLink>
+          </li>
+          <li>
+            <NavLink to="/myBids">My Bids</NavLink>
+          </li>
+        </>
+      )}
       <li>
         <NavLink to="/aboutUs">About us</NavLink>
       </li>
@@ -47,18 +57,38 @@ const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          Smart <span>Deals</span>
-        </a>
+        <Link to="/" className="btn btn-ghost text-3xl font-bold">
+          Smart <span className="  text-purple-500  ">Deals</span>
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navLinks}</ul>
+        <ul className="menu menu-horizontal px-1 text-[16px] font-medium">
+          {navLinks}
+        </ul>
       </div>
       <div className="navbar-end">
-        {loading?'loading...': user ? (
-          <> <img className="h-10 w-10 mr-3 rounded-full" src={user.photoURL} alt="profile" /> <button onClick={()=>logOut()} className="btn">Log Out</button></>
+        {loading ? (
+          "loading..."
+        ) : user ? (
+          <>
+            {" "}
+            <img
+              className="h-10 w-10 mr-3 rounded-full"
+              src={user.photoURL}
+              alt="profile"
+            />{" "}
+            <button
+              onClick={() => logOut()}
+              className="btn bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+            >
+              Log Out
+            </button>
+          </>
         ) : (
-          <NavLink to="login" className="btn">
+          <NavLink
+            to="login"
+            className="btn bg-linear-to-r from-purple-500 to-indigo-500 text-white"
+          >
             Login
           </NavLink>
         )}

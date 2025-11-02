@@ -33,15 +33,9 @@ const AuthProvider = ({ children }) => {
   };
 
   // Login with email & password
-  const loginUser = async (email, password) => {
+  const loginUser = (email, password) => {
     setLoading(true);
-    try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      setUser(result.user);
-      return result;
-    } finally {
-      setLoading(false);
-    }
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   // Logout
