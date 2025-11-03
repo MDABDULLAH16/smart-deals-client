@@ -5,14 +5,19 @@ const MyBids = () => {
     const url = import.meta.env.VITE_BACKEND_URL;
     const {user}= useContext(AuthContext)
     const myBidsPromise = fetch(`${url}/myBids?email=${user?.email}`).then(res => res.json());
+    const bidProducts = fetch(`${url}/products`).then(res => res.json());
+console.log('bidProducts',bidProducts);
 
     return (
-        <div>
-            <h1>My bids also protected</h1>
-            <Suspense fallback='loading...'>
-                <MyBidsCard myBidsPromise={myBidsPromise}></MyBidsCard>
-            </Suspense>
-        </div>
+      <div>
+       
+        <Suspense fallback="loading...">
+          <MyBidsCard
+            bidProducts={bidProducts}
+            myBidsPromise={myBidsPromise}
+          ></MyBidsCard>
+        </Suspense>
+      </div>
     );
 };
 

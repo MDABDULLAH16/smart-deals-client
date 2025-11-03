@@ -9,8 +9,11 @@ const ProductDetail = () => {
   const [bids, setBids] = useState([]);
 
   useEffect(() => {
-    fetch(`${url}/bids/${id}`).then(res=>res.json()).then(data=>setBids(data))
-  },[])
+    fetch(`${url}/bids/${id}`).then(res => res.json()).then(data => {
+      const newBid = data.sort((a, b) => parseInt(b.price) - parseInt(a.price));
+      setBids(newBid)
+    })
+  },[id,bids])
   // console.log('bids',bids);
 
   useEffect(() => {
@@ -20,8 +23,8 @@ const ProductDetail = () => {
         console.log(data);
         setProduct(data);
       });
-  }, []);
-    console.log(product);
+  }, [id]);
+    // console.log(product);
  const {
    title,
    category,
