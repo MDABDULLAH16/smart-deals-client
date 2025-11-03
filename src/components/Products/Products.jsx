@@ -1,4 +1,5 @@
 import React, { use } from "react";
+import { Link } from "react-router";
 
 const Products = ({ latestProductPromise }) => {
   const latestProducts = use(latestProductPromise);
@@ -31,9 +32,9 @@ const Products = ({ latestProductPromise }) => {
               <p className="text-primary font-semibold dark:text-gray-400 mb-3">
                 ${product.price_min} - ${product.price_max}
               </p>
-              <button className="btn btn-outline btn-sm hover:btn-primary text-primary hover:text-white transition-colors duration-300">
+              <Link to={`/productDetails/${product._id}`} className="btn btn-outline btn-sm hover:btn-primary text-primary hover:text-white transition-colors duration-300">
                 View Details
-              </button>
+              </Link>
             </div>
           </div>
         ))}

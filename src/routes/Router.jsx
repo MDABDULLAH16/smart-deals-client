@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import MyProducts from "../pages/MyProducts/MyProducts";
 import MyBids from "../pages/MyBids/MyBids";
+import ProductDetail from "../pages/ProductDetails/ProductDetail";
 
 export const router = createBrowserRouter([
   {
@@ -16,13 +17,29 @@ export const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "/allProducts", Component: AllProducts },
       {
-        path: 'myProducts', element: <PrivateRoute>
-        <MyProducts></MyProducts>
-      </PrivateRoute>},
+        path: "/productDetails/:id",
+        element: (
+          <PrivateRoute>
+            <ProductDetail></ProductDetail>
+          </PrivateRoute>
+        ),
+      },
       {
-        path: 'myBids', element: <PrivateRoute>
-        <MyBids></MyBids>
-      </PrivateRoute>},
+        path: "myProducts",
+        element: (
+          <PrivateRoute>
+            <MyProducts></MyProducts>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "myBids",
+        element: (
+          <PrivateRoute>
+            <MyBids></MyBids>
+          </PrivateRoute>
+        ),
+      },
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
     ],
