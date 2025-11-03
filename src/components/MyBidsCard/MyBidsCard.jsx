@@ -1,7 +1,9 @@
-import React, { use } from "react";
-
+import { use, useState } from "react";
+import Swal from "sweetalert2";
+const url = import.meta.env.VITE_BACKEND_URL;
 const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
-  const myBids = use(myBidsPromise);
+  const initialBids = use(myBidsPromise);
+  const [myBids,setMyBids]= useState(initialBids)
   const bidProduct = use(bidProducts);
 
   // get product IDs from user's bids
@@ -20,6 +22,37 @@ const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
     return { ...bid, product: matchedProduct };
   });
 
+  const handleDelete = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`${url}/myBids/${id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Bid has been deleted.",
+                icon: "success",
+              });
+
+              const remainingBids = myBids.filter(bid => bid._id !== id)
+              setMyBids(remainingBids)
+            }
+          });
+      }
+    });
+  };
   return (
     <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
       <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-center">
@@ -35,6 +68,7 @@ const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
               <th className="py-3 px-2 sm:px-4">Product</th>
               <th className="py-3 px-2 sm:px-4">Seller</th>
               <th className="py-3 px-2 sm:px-4">Bid Price</th>
+              <th className="py-3 px-2 sm:px-4">Status</th>
               <th className="py-3 px-2 sm:px-4">Actions</th>
             </tr>
           </thead>
@@ -89,13 +123,22 @@ const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
                 <td className="py-3 px-2 sm:px-4 font-semibold text-gray-800">
                   ${item.price}
                 </td>
+                {/* Bid Price */}
+                <td>
+                  <button className="px-2 sm:px-3 py-1 mb-4 rounded-full bg-yellow-400 transition text-xs sm:text-sm">
+                    {item.status}
+                  </button>
+                </td>
 
                 {/* Actions */}
                 <td className="py-3 px-2 sm:px-4 space-y-2 sm:space-y-0 sm:space-x-2 flex flex-col sm:flex-row">
                   <button className="px-2 sm:px-3 py-1 text-blue-600 border border-blue-600 rounded hover:bg-blue-50 transition text-xs sm:text-sm">
                     View Product
                   </button>
-                  <button className="px-2 sm:px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-50 transition text-xs sm:text-sm">
+                  <button
+                    onClick={() => handleDelete(item._id)}
+                    className="px-2 sm:px-3 py-1 text-red-500 border border-red-500 rounded hover:bg-red-50 transition text-xs sm:text-sm"
+                  >
                     Cancel Bid
                   </button>
                 </td>

@@ -6,7 +6,7 @@ const MyBids = () => {
     const {user}= useContext(AuthContext)
     const myBidsPromise = fetch(`${url}/myBids?email=${user?.email}`).then(res => res.json());
     const bidProducts = fetch(`${url}/products`).then(res => res.json());
-console.log('bidProducts',bidProducts);
+ 
 
     return (
       <div>
