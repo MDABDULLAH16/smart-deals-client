@@ -4,8 +4,15 @@ import MyBidsCard from '../../components/MyBidsCard/MyBidsCard';
 const MyBids = () => {
     const url = import.meta.env.VITE_BACKEND_URL;
     const {user}= useContext(AuthContext)
-    const myBidsPromise = fetch(`${url}/myBids?email=${user?.email}`).then(res => res.json());
-    const bidProducts = fetch(`${url}/products`).then(res => res.json());
+  const myBidsPromise = fetch(`${url}/myBids?email=${user?.email}`, {
+    headers: {
+      authorization:`Bearer ${user.accessToken}`
+    }}).then(res => res.json());
+  const bidProducts = fetch(`${url}/products`, {
+    headers: {
+      authorization: `Bearer ${user.accessToken}`,
+    },
+  }).then((res) => res.json());
  
 
     return (

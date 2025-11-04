@@ -4,7 +4,9 @@ const url = import.meta.env.VITE_BACKEND_URL;
 const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
   const initialBids = use(myBidsPromise);
   const [myBids,setMyBids]= useState(initialBids)
-  const bidProduct = use(bidProducts);
+  const bidProduct = use(bidProducts); 
+  console.log({bidProduct});
+  
 
   // get product IDs from user's bids
   const productIds = myBids.map((bid) => bid.productId);
@@ -13,6 +15,8 @@ const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
   const products = bidProduct.filter((product) =>
     productIds.includes(String(product._id))
   );
+  console.log({products});
+  
 
   // merge bid and product info
   const combinedData = myBids.map((bid) => {
@@ -21,7 +25,8 @@ const MyBidsCard = ({ myBidsPromise, bidProducts }) => {
     );
     return { ...bid, product: matchedProduct };
   });
-
+  console.log({ combinedData });
+  
   const handleDelete = (id) => {
     console.log(id);
     Swal.fire({

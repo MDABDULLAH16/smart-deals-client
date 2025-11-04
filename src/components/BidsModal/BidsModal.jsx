@@ -10,9 +10,9 @@ const BidsModal = ({ product, handleCloseModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const buyerName = user?.displayName;
-    const buyerEmail = user?.email;
-    const buyerImage = user?.photoURL;
+    const buyer_name = user?.displayName;
+    const buyer_email = user?.email;
+    const buyer_image = user?.photoURL;
     const price = e.target.price.value;
     const contact = e.target.contact.value;
     const productId = product._id;
@@ -21,9 +21,9 @@ const BidsModal = ({ product, handleCloseModal }) => {
     const newBids = {
       productId,
       status,
-      buyerEmail,
-      buyerName,
-      buyerImage,
+      buyer_email,
+      buyer_name,
+      buyer_image,
       price,
       contact,
     };

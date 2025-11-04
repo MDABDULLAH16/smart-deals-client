@@ -6,13 +6,19 @@ const url = import.meta.env.VITE_BACKEND_URL;
 
 const MyProducts = () => {
   const { user } = useContext(AuthContext);
+  // console.log('token',user.accessToken);
+  
   const [myProducts, setMyProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch logged-in user's products
   useEffect(() => {
     if (!user?.email) return;
-    fetch(`${url}/products?email=${user.email}`)
+    fetch(`${url}/products?email=${user.email}`, {
+      headers: {
+        authorization:`Bearer ${user.accessToken}`
+      }
+    })
       .then((res) => res.json())
       .then((data) => {
         setMyProducts(data);

@@ -53,15 +53,15 @@ const BidForProduct = ({ bids, product }) => {
                 <td className="py-3 px-4">
                   <div className="flex items-center gap-3">
                     <img
-                      src={bid.buyerImage}
-                      alt={bid.buyerName}
+                      src={bid.buyer_image}
+                      alt={bid.buyer_name}
                       className="w-10 h-10 rounded-full object-cover border"
                     />
                     <div>
                       <p className="font-semibold text-gray-800">
-                        {bid.buyerName}
+                        {bid.buyer_name}
                       </p>
-                      <p className="text-sm text-gray-500">{bid.buyerEmail}</p>
+                      <p className="text-sm text-gray-500">{bid.buyer_email}</p>
                     </div>
                   </div>
                 </td>
